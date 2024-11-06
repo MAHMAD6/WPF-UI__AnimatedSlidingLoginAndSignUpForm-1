@@ -1,0 +1,251 @@
+﻿<Window
+    x:Class="LoginForm.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:CC="clr-namespace:CustomControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:LoginForm"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="350"
+    Height="450"
+    AllowsTransparency="True"
+    Background="Transparent"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+
+
+        <Style x:Key="BaseTextBox_Style" TargetType="{x:Type CC:PlaceHolderTextBox}">
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Width" Value="250" />
+            <Setter Property="FontFamily" Value="/Resources/Fonts/#Nexa" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="CornerRadius" Value="14" />
+        </Style>
+
+
+        <Style
+            x:Key="LightTextBox_Style"
+            BasedOn="{StaticResource BaseTextBox_Style}"
+            TargetType="{x:Type CC:PlaceHolderTextBox}">
+            <Setter Property="Background" Value="#E0DEDB" />
+            <Setter Property="Foreground" Value="#262322" />
+        </Style>
+
+
+        <Style
+            x:Key="DarkTextBox_Style"
+            BasedOn="{StaticResource BaseTextBox_Style}"
+            TargetType="{x:Type CC:PlaceHolderTextBox}">
+            <Setter Property="Background" Value="#262322" />
+            <Setter Property="Foreground" Value="#E0DEDB" />
+        </Style>
+
+
+        <Style x:Key="RoundButton_Style" TargetType="Button">
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Width" Value="190" />
+            <Setter Property="FontFamily" Value="/Resources/Fonts/#Nexa" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                ContentSource="Content" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Storyboard x:Key="LoginShowAnimation">
+            <DoubleAnimation
+                Storyboard.TargetName="holder_Translate"
+                Storyboard.TargetProperty="X"
+                From="0"
+                To="400"
+                Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation
+                BeginTime="0:0:0.1"
+                Storyboard.TargetName="Login_TBlock"
+                Storyboard.TargetProperty="FontSize"
+                To="35"
+                Duration="0:0:0.7" />
+            <DoubleAnimation
+                BeginTime="0:0:0.1"
+                Storyboard.TargetName="SignUp_TBlock"
+                Storyboard.TargetProperty="FontSize"
+                To="20"
+                Duration="0:0:0.7" />
+            <DoubleAnimation
+                Storyboard.TargetName="Border_Translate"
+                Storyboard.TargetProperty="Y"
+                To="-300"
+                Duration="0:0:0.7" />
+
+        </Storyboard>
+
+
+        <Storyboard x:Key="SignUpShowAnimation">
+            <DoubleAnimation
+                Storyboard.TargetName="holder_Translate"
+                Storyboard.TargetProperty="X"
+                From="400"
+                To="0"
+                Duration="0:0:0.6">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation
+                BeginTime="0:0:0.1"
+                Storyboard.TargetName="Login_TBlock"
+                Storyboard.TargetProperty="FontSize"
+                To="20"
+                Duration="0:0:0.7" />
+            <DoubleAnimation
+                BeginTime="0:0:0.1"
+                Storyboard.TargetName="SignUp_TBlock"
+                Storyboard.TargetProperty="FontSize"
+                To="35"
+                Duration="0:0:0.7" />
+            <DoubleAnimation
+                Storyboard.TargetName="Border_Translate"
+                Storyboard.TargetProperty="Y"
+                To="0"
+                Duration="0:0:0.7" />
+
+        </Storyboard>
+    </Window.Resources>
+
+
+    <Border Background="#262322" CornerRadius="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <!--  || Sign Up ||  -->
+
+            <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                <Image
+                    Width="30"
+                    Height="30"
+                    Margin="0,10,10,0"
+                    HorizontalAlignment="Right"
+                    Cursor="Hand"
+                    MouseDown="Button_Close"
+                    Source="/Resources/Icons/Icon_Close_light.png" />
+
+                <TextBlock
+                    x:Name="SignUp_TBlock"
+                    Margin="0,0,0,20"
+                    HorizontalAlignment="Center"
+                    Cursor="Hand"
+                    FontFamily="/Resources/Fonts/#Poppins Black"
+                    FontSize="35"
+                    FontWeight="Bold"
+                    Foreground="#E0DEDB"
+                    MouseDown="SignUp_MouseDown"
+                    Text="Sign Up" />
+
+                <StackPanel x:Name="holder">
+                    <StackPanel.RenderTransform>
+                        <TranslateTransform x:Name="holder_Translate" />
+                    </StackPanel.RenderTransform>
+                    <CC:PlaceHolderTextBox
+                        Margin="10"
+                        PlaceHolder="User Name"
+                        Style="{StaticResource LightTextBox_Style}" />
+                    <CC:PlaceHolderTextBox
+                        Margin="10"
+                        PlaceHolder="Email"
+                        Style="{StaticResource LightTextBox_Style}" />
+                    <CC:PlaceHolderTextBox
+                        Margin="10"
+                        PlaceHolder="Password"
+                        Style="{StaticResource LightTextBox_Style}" />
+                    <Button
+                        Margin="10"
+                        Background="#AAD922"
+                        Content="Register"
+                        Foreground="#262322"
+                        Style="{StaticResource RoundButton_Style}" />
+                    <TextBlock
+                        Margin="0,15,0,10"
+                        HorizontalAlignment="Center"
+                        FontFamily="/Resources/Fonts/#nexa"
+                        Foreground="White"
+                        Text="or" />
+                </StackPanel>
+            </StackPanel>
+
+
+            <!--  || Login ||  -->
+            <Border
+                Grid.Row="1"
+                Height="400"
+                Background="#E0DEDB"
+                CornerRadius="90 90 0 0">
+                <Border.RenderTransform>
+                    <TranslateTransform x:Name="Border_Translate" />
+                </Border.RenderTransform>
+                <StackPanel>
+                    <TextBlock
+                        x:Name="Login_TBlock"
+                        Margin="0,10,0,20"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand"
+                        FontFamily="/Resources/Fonts/#Poppins Black"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Foreground="#262322"
+                        MouseDown="Login_MouseDown"
+                        Text="Login" />
+                    <CC:PlaceHolderTextBox
+                        Margin="10"
+                        PlaceHolder="User Name"
+                        Style="{StaticResource DarkTextBox_Style}" />
+                    <CC:PlaceHolderTextBox
+                        Margin="10"
+                        PlaceHolder="Password"
+                        Style="{StaticResource DarkTextBox_Style}" />
+                    <CheckBox
+                        Margin="60,15"
+                        Content="Save Login Credentials"
+                        FontFamily="/Resources/Fonts/#nexa"
+                        FontWeight="Bold" />
+
+                    <Button
+                        Margin="10"
+                        Background="#262322"
+                        Content="Register"
+                        Foreground="#E0DEDB"
+                        Style="{StaticResource RoundButton_Style}" />
+                </StackPanel>
+
+            </Border>
+
+
+        </Grid>
+    </Border>
+
+</Window>
